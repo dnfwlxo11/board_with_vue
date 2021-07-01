@@ -26,7 +26,10 @@ router.post('/newContent', (req, res, next) => {
 });
 
 router.get('/updateContent', (req, res) => {
-    return res.sendFile(path.join(__dirname, '../../client/public/html/index.html'))
+    Board.find({}, (err, contents) => {
+        return res.json({ contents });
+    });
+    
 })
 
 module.exports = router
