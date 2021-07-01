@@ -19,6 +19,18 @@ function getStorage(title) {
     return localStorage.getItem(title);
 }
 
+function index() {
+    const body = document.querySelector('body');
+    const form = document.createElement("form");
+    
+    form.setAttribute('method', 'get');
+    form.setAttribute('action', '/');
+
+    body.appendChild(form);
+
+    form.submit();
+}
+
 function render() {
     const title = content_title;
     const content = getStorage(content_title).split(',')[1];

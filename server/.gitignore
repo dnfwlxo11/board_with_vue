@@ -1,0 +1,5 @@
+# Node 패키지
+node_modules
+package-lock.json
+
+config/key.js
