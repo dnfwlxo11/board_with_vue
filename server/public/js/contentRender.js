@@ -16,7 +16,7 @@ function onClickDelete() {
 
 function onClickList() {
     const url = 
-    fetch(`/api/`)
+    fetch(`/`)
 
     window.history.back();
 }

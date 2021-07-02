@@ -1,29 +1,112 @@
-<!DOCTYPE html>
-<html lang="ko">
+<!doctype html>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
-    <title>간단한 게시판 예제</title>
+    <%- include('header') %>
+    <title>게시판 예제</title>
 </head>
+
 <body>
-    <div class="wrapper">
-        <div class="board-div">
-            <table id='board'>
-                <tr>
-                    <th class="first-line">번 호</th>
-                    <th class="first-line">제 목</th>
-                    <th class="first-line">작성자</th>
-                    <th class="first-line">작성일</th>
-                </tr>
-                <tbody id="board-body" class="board-body"></tbody>
-            </table>
-        </div>
-        <div class="btn-div">
-            <button id="submit-btn" onclick="createContent()">등록</button>
-            <button id="refresh-btn" onclick="refreshContent()">새로고침</button>
+    <div class="container">
+        <div class="wrapper">
+            <div class="board-div">
+                <table class="table table-hover mt-5 mb-3 d-md-table d-none">
+                    <tr>
+                        <th>번 호</th>
+                        <th>제 목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                    </tr>
+                    <tbody id="board-body">
+                        <% for (let i=(page-1)*limit;;i++) { %>
+                        <% if (i>=items.length || i>(page-1)*limit + (limit-1)) { break } %>
+                        <tr onclick=loadContent(<%= items[i].seq %>)>
+                            <th><%= i + 1 %></th>
+                            <th><%= items[i].title %></th>
+                            <th><%= items[i].nickname %></th>
+                            <th><%= items[i].date %></th>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+
+                <table class="table table-hover mt-5 mb-3 d-md-none d-table">
+                    <tr>
+                        <th>번 호</th>
+                        <th>제 목</th>
+                        
+                    </tr>
+                    <tbody id="board-body">
+                        <% for (let i=(page-1)*limit;;i++) { %>
+                        <% if (i>=items.length || i>(page-1)*limit + (limit-1)) { break } %>
+                        <tr onclick=loadContent(<%= items[i].seq %>)>
+                            <th><%= i + 1 %></th>
+                            <th><%= items[i].title %></th>
+                        
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row mb-3">
+                <div class="col-3">
+                    <select class="form-control" onchange="changeLimit(this.value)">
+                        <option value="5" selected>기본값</option>
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        <option value="7">7</option>
+                    </select>
+                </div>
+                <div class="col-9">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                        
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                           
+                        </ul>
+                    </nav>
+                    <% if (page!=1) { %>
+                    <a href=/<%= page - 1 %>?limit=<%= limit %>>
+                        <</a> <% } else {} %> <% for(let i=1; i<=Math.ceil(items.length/limit); i++) { %>
+                            <% if (page==i) { %> <a class="current" href=/<%= i %>?limit=<%= limit %>><%= i %>
+                    </a>
+                    <% } else { %>
+                    <a href=/<%= i %>?limit=<%= limit %>><%= i %></a>
+                    <% } %>
+
+                    <% } %>
+
+                    <% if (page!=Math.ceil(items.length/limit)) { %>
+                    <a href=/<%= parseInt(page) + 1 %>?limit=<%= limit %>>></a>
+                    <% } %>
+                </div>
+
+            </div>
+            <div class="btn-div">
+                <button type="button" class="btn btn-primary" onclick="createContent()">등록</button>
+                <button type="button" class="btn btn-danger" onclick="refreshContent()">새로고침</button>
+            </div>
         </div>
     </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
+    </script>
+    <script src="/js/main.js"></script>
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    -->
 </body>
-<script src="/js/main.js"></script>
+
 </html>
