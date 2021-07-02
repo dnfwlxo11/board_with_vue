@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>내용 보기</title>
+</head>
+<body>
+    <div id="wrapper" class="wrapper">
+        <div id="title-div" class="title">
+            <span id="title-span">제 목 : <%= title %></span>
+        </div>
+        <div id="author-div" class="title">
+            <span id="author-span">작성자 : <%= nickname %></span>
+        </div>
+        <div id="content-div" class="content">
+            <span id="content-span">내 용 : <%= content %></span>
+        </div>
+        <div id="btn-div">
+            <button type="button" onclick="onClickList()">목록보기</button>
+            <button type="button" onclick="onClickDelete()">삭 제</button>
+        </div>
+    </div>
+</body>
+<script src="/js/contentRender.js"></script>
+</html>

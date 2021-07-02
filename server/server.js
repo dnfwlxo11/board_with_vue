@@ -8,9 +8,10 @@ const config = require('./config/key');
 
 const PORT = 3000;
 
-app.use('/', express.static(path.join(__dirname, '../client/public')));
+app.use('/', express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.set('view engine','ejs');
 
 const mongoose = require('mongoose')
 mongoose.connect(config.mongoURI, {
@@ -22,7 +23,7 @@ mongoose.connect(config.mongoURI, {
     .catch(err => console.log(err))
 
 app.get('/', (req, res) => {
-    return res.sendFile(path.join(__dirname, '../client/public/html/index.html'))
+    return res.render('index')
 });
 
 app.use('/api', board);

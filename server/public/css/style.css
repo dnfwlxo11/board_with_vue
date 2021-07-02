@@ -16,6 +16,7 @@ table {
 
 th {
     padding: 15px;
+    background-color: bisque;
 }
 
 button {
@@ -63,7 +64,7 @@ button {
 .wrapper > .title {
     margin-bottom: 10px;
     height: 20%;
-    font-size: 100px;
+    font-size: 40px;
 }
 
 .wrapper > .content {
