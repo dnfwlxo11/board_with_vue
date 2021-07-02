@@ -24,15 +24,16 @@ mongoose.connect(config.mongoURI, {
     .catch(err => console.log(err))
 
 app.get('/', (req, res) => {
-    return res.redirect('/1?limit=5')
+    return res.redirect('/home?page=1&limit=5')
 });
 
-app.get('/:page', (req, res) => {
-    const param_limit = req.query.limit;
-    console.log(param_limit)
+app.get('/home', (req, res) => {
+    const page = req.query.page;
+    const limit = req.query.limit;
+
     Board.find({}, (err, items) => {
-        if (req.query.limit ===  undefined) return res.render('index', { items, page: req.params.page, limit: 5, first: (req.params.page-1)*5, last: (req.params.page-1)*5+4});
-        else return res.render('index', { items, page: req.params.page, limit: param_limit, first: (req.params.page-1)*param_limit, last:  (req.params.page-1)*5+(param_limit-1) });
+        if (req.query.limit ===  undefined) return res.render('index', { items, page: page, limit: 5, first: (page-1)*5, last: (page-1)*5+4});
+        else return res.render('index', { items, page: page, limit: limit, first: (page-1)*limit, last:  (page-1)*5+(limit-1) });
     })
 });
 

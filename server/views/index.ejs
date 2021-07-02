@@ -49,8 +49,8 @@
                 </table>
             </div>
             <div class="row mb-3">
-                <div class="col-3">
-                    <select class="form-control" onchange="changeLimit(this.value)">
+                <div class="col-2">
+                    <select class="form-control" onchange="setQuery(this.value)">
                         <option value="5" selected>기본값</option>
                         <option value="3">3</option>
                         <option value="5">5</option>
@@ -60,33 +60,37 @@
                 <div class="col-9">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                        
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                           
+                            <li class="page-item">
+                                <% if (page!=1) { %>
+                                    <a class="page-link" href=/home?page=<%= page - 1 %>&limit=<%= limit %>>이전</a> 
+                                <% } else {} %> 
+                            </li>
+                                
+                            <% for(let i=1; i<=Math.ceil(items.length/limit); i++) { %>
+                                    <% if (page==i) { %> 
+                                        <li class="page-item active">
+                                            <a class="page-link" href=/home?page=<%= i %>&limit=<%= limit %>><%= i %></a>
+                                        </li>
+                                    <% } else { %>
+                                        <li class="page-item">
+                                            <a class="page-link" href=/home?page=<%= i %>&limit=<%= limit %>><%= i %></a>
+                                        </li>
+                                    <% } %>
+                                </li>
+                            <% } %>
+
+                            <li class="page-item">
+                                <% if (page!=Math.ceil(items.length/limit)) { %>
+                                    <a class="page-link" href=/home?page=<%= parseInt(page) + 1 %>&limit=<%= limit %>>다음</a>
+                                <% } %>
+                            </li>                           
                         </ul>
                     </nav>
-                    <% if (page!=1) { %>
-                    <a href=/<%= page - 1 %>?limit=<%= limit %>>
-                        <</a> <% } else {} %> <% for(let i=1; i<=Math.ceil(items.length/limit); i++) { %>
-                            <% if (page==i) { %> <a class="current" href=/<%= i %>?limit=<%= limit %>><%= i %>
-                    </a>
-                    <% } else { %>
-                    <a href=/<%= i %>?limit=<%= limit %>><%= i %></a>
-                    <% } %>
-
-                    <% } %>
-
-                    <% if (page!=Math.ceil(items.length/limit)) { %>
-                    <a href=/<%= parseInt(page) + 1 %>?limit=<%= limit %>>></a>
-                    <% } %>
                 </div>
 
             </div>
             <div class="btn-div">
                 <button type="button" class="btn btn-primary" onclick="createContent()">등록</button>
-                <button type="button" class="btn btn-danger" onclick="refreshContent()">새로고침</button>
             </div>
         </div>
     </div>

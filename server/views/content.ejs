@@ -5,19 +5,18 @@
     <title>내용 보기</title>
 </head>
 <body>
-    <div id="wrapper" class="wrapper">
-        <div id="title-div" class="title">
-            <span id="title-span">제 목 : <%= title %></span>
-        </div>
-        <div id="author-div" class="title">
-            <span id="author-span">작성자 : <%= nickname %></span>
-        </div>
-        <div id="content-div" class="content">
-            <span id="content-span">내 용 : <%= content %></span>
+    <div class="container mt-5">
+        <div class="card bg-light mb-3" style="min-height: 600px;">
+            <div class="card-header pl-5">제 목 : <%= title %></div>
+            <div class="card-header pl-5">작성자 : <%= nickname %></div>
+            <div class="card-body">
+                <p class="cart-text m-5"><%= content %></p>
+                <div class="card-text"></div>
+            </div>
         </div>
         <div id="btn-div">
-            <button type="button" onclick="onClickList()">목록보기</button>
-            <button type="button" onclick="onClickDelete()">삭 제</button>
+            <button type="button" class="btn btn-secondary" onclick="onClickList()">목록보기</button>
+            <button type="button" class="btn btn-danger" onclick="onClickDelete()">삭 제</button>
         </div>
     </div>
 </body>
