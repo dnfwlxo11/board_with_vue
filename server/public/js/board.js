@@ -1,7 +1,7 @@
 function onClickAdd(form) {
     const title = (form.title.value) ? form.title.value.trim() : form.title.value;
-    const nickname = form.nickname.value;
-    const content = form.content.value;
+    const nickname = (form.nickname.value) ? form.nickname.value.trim() : form.nickname.value;
+    const content = (form.content.value) ? form.content.value.trim() : form.content.value;
 
     if (title == '' || nickname == '' || content == '') {
         alert('빈 칸이 있습니다.')

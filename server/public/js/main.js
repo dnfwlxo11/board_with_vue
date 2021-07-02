@@ -1,25 +1,11 @@
 const tbody = document.getElementById('board-body');
 
 function createContent() {
-    const body = document.querySelector('body');
-    const form = document.createElement("form");
-    
-    form.setAttribute('method', 'get');
-    form.setAttribute('action', '/api/newContent');
-
-    body.appendChild(form);
-
-    form.submit();
+    window.location.href = `http://localhost:3000/api/newContent`;
 }
 
 function loadContent(seq) {
-    const body = document.querySelector('body');
-    const form = document.createElement('form');
-    body.appendChild(form);
-
-    form.setAttribute('action', `/api/loadContent/${seq}`)
-
-    form.submit();
+    window.location.href = `http://localhost:3000/api/loadContent/${seq}`;
 }
 
 function getFureURL() {

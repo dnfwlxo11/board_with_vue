@@ -15,8 +15,5 @@ function onClickDelete() {
 }
 
 function onClickList() {
-    const url = 
-    fetch(`/`)
-
     window.history.back();
 }
