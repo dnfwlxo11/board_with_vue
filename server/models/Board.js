@@ -23,6 +23,10 @@ const boardSchema = mongoose.Schema({
 
     date: {
         type: String
+    },
+
+    password: {
+        type: Number
     }
 })
 

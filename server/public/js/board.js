@@ -2,8 +2,9 @@ function onClickAdd(form) {
     const title = (form.title.value) ? form.title.value.trim() : form.title.value;
     const nickname = (form.nickname.value) ? form.nickname.value.trim() : form.nickname.value;
     const content = (form.content.value) ? form.content.value.trim() : form.content.value;
+    const password = (form.password.value) ? form.password.value.trim() : form.password.value;
 
-    if (title == '' || nickname == '' || content == '') {
+    if (title == '' || nickname == '' || content == '' || password == '') {
         alert('빈 칸이 있습니다.')
     } else {
         fetch('/api/newContent', {
@@ -14,7 +15,8 @@ function onClickAdd(form) {
             body: JSON.stringify({
                 title,
                 nickname,
-                content
+                content,
+                password
             })
         }).then(res => {
             res.json().then(data => {

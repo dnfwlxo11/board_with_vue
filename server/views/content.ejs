@@ -1,24 +1,32 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <%- include('header') %>
-    <title>내용 보기</title>
+        <title>내용 보기</title>
 </head>
+
 <body>
     <div class="container mt-5">
         <div class="card bg-light mb-3" style="min-height: 600px;">
-            <div class="card-header pl-5">제 목 : <%= title %></div>
-            <div class="card-header pl-5">작성자 : <%= nickname %></div>
+            <div class="card-header pl-5">제 목 : <%= title %>
+            </div>
+            <div class="card-header pl-5">작성자 : <%= nickname %>
+            </div>
             <div class="card-body">
-                <p class="cart-text m-5"><%= content %></p>
+                <p class="cart-text m-5">
+                    <%= content %>
+                </p>
                 <div class="card-text"></div>
             </div>
         </div>
         <div id="btn-div">
             <button type="button" class="btn btn-secondary" onclick="onClickList()">목록보기</button>
             <button type="button" class="btn btn-danger" onclick="onClickDelete()">삭 제</button>
+            <input id="pass" type="password" class="form-control mt-3" placeholder="비밀번호" aria-describedby="basic-addon1" style="max-width: 300px;">
         </div>
     </div>
 </body>
 <script src="/js/contentRender.js"></script>
+
 </html>

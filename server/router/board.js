@@ -41,13 +41,21 @@ router.get('/loadContent/:id', (req, res) => {
     })
 })
 
-router.get('/deleteContent/:id', (req, res) => {
-    Board.deleteOne({ seq: req.params.id }, (err) => {
-        if (err) { 
-            console.log('에러 발생') 
-            return res.json({ success: false, err }); 
+router.post('/deleteContent/:id', (req, res) => {
+    console.log(req.body.pass)
+    Board.findOne({ seq: req.params.id }, (err, content) => {
+        if (err) {
+            return res.json({ success: false, msg: err }); 
+        } else if (content.password != req.body.pass) {
+            return res.json({ success: false, msg: '비밀번호가 틀렸습니다.' }); 
         } else {
-            return res.json({ success: true }); 
+            Board.deleteOne({ seq: req.params.id }, (err) => {
+                if (err) {
+                    return res.json({ success: false, msg: err }); 
+                } else {
+                    return res.json({ success: true }); 
+                }
+            })
         }
     })
 })

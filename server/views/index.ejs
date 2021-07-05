@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <div class="wrapper">
-            <div class="board-div">
+            <div class="board-div" style="text-align: center;">
                 <table class="table table-hover mt-5 mb-3 d-md-table d-none">
                     <tr>
                         <th>번 호</th>
@@ -42,7 +42,6 @@
                         <tr onclick=loadContent(<%= items[i].seq %>)>
                             <th><%= i + 1 %></th>
                             <th><%= items[i].title %></th>
-                        
                         </tr>
                         <% } %>
                     </tbody>
