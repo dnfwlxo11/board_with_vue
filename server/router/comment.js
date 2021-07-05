@@ -34,8 +34,28 @@ router.post('/addComment/:id', (req, res) => {
                 })
         }
     });
+})
 
-
+router.post('/deleteComment/:id', (req, res) => {
+    Comment.findOne({ _id: req.body._id}, (err, item) => {
+        if (err) {
+            console.log('댓글 삭제 중 에러 발생')
+            return res.json({ success: false, err });
+        } else {
+            if (item.pass == req.body.pass) {
+                Board.findOneAndUpdate({ seq: req.params.id })
+                .populate('comments')
+                .exec((err, item) => {
+                    item.comments.remove(req.body._id);
+                    item.save();
+                })
+                item.remove();
+                return res.json({ success: true });
+            } else {
+                return res.json({ success: false, msg: '비밀번호가 틀렸습니다.' });
+            }
+        }
+    });
 })
 
 module.exports = router

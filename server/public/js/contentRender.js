@@ -17,7 +17,7 @@ function onClickDelete() {
             if (data.success) {
                 window.location.href = 'http://localhost:3000/';
             } else {
-                alert('삭제 중 에러가 발생했습니다.', data.msg);
+                alert(data.msg);
             }
         })
     })
@@ -52,7 +52,32 @@ function onClickCommentAdd(form) {
             if (!data.success) {
                 alert('댓글을 저장하는데 실패했습니다.')
             } else {
-                window.location.href = window.location.href;
+                window.location.reload();
+            }
+        })
+    })
+}
+
+function onClickCommentDelete(form) {
+    const _id = form.getElementsByClassName('reply-id')[0].innerText;
+    const pass = form.getElementsByClassName('pass')[0].value;
+
+    fetch(`/api/comment/deleteComment/${seq}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            _id,
+            pass
+        })
+    })
+    .then(res => {
+        res.json().then(data => {
+            if (!data.success) {
+                alert(data.msg)
+            } else {
+                window.location.reload();
             }
         })
     })
