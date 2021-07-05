@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment');
 autoIncrement.initialize(mongoose.connection);
 
-const boardSchema = mongoose.Schema({
+const boardSchema = Schema({
     seq: {
         type: Number,
         default: 1
@@ -26,8 +27,15 @@ const boardSchema = mongoose.Schema({
     },
 
     password: {
-        type: Number
-    }
+        type: String
+    },
+
+    comments: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Comment'
+        }
+    ]
 })
 
 boardSchema.plugin(autoIncrement.plugin, {

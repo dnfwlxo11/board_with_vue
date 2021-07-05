@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const board = require('./router/board');
+const comment = require('./router/comment');
 const config = require('./config/key');
 
 const { Board } = require('./models/Board');
@@ -37,7 +38,8 @@ app.get('/home', (req, res) => {
     })
 });
 
-app.use('/api', board);
+app.use('/api/board', board);
+app.use('/api/comment', comment);
 
 app.listen(PORT, () => {
     console.log(`Server start!!\thttp://localhost:${PORT}`);

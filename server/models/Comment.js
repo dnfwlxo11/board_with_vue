@@ -1,16 +1,22 @@
 const mongoose = require('mongoose');
+const { Board } = require('./Board');
+const Schema = mongoose.Schema;
 
-const commentSchema = mongoose.Schema({
-    title: {
+const commentSchema = Schema({
+    content: {
         type: String
     },
 
-    reply: {
+    pass: {
         type: String
     },
 
-    nickname: {
-        type: string
+    author: {
+        type: String
+    },
+
+    date: {
+        type: String
     }
 })
 

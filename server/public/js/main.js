@@ -1,11 +1,11 @@
 const tbody = document.getElementById('board-body');
 
 function createContent() {
-    window.location.href = `http://localhost:3000/api/newContent`;
+    window.location.href = `http://localhost:3000/api/board/newContent`;
 }
 
 function loadContent(seq) {
-    window.location.href = `http://localhost:3000/api/loadContent/${seq}`;
+    window.location.href = `http://localhost:3000/api/board/loadContent/${seq}`;
 }
 
 function getFureURL() {

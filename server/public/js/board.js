@@ -7,7 +7,7 @@ function onClickAdd(form) {
     if (title == '' || nickname == '' || content == '' || password == '') {
         alert('빈 칸이 있습니다.')
     } else {
-        fetch('/api/newContent', {
+        fetch('/api/board/newContent', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ function onClickAdd(form) {
         }).then(res => {
             res.json().then(data => {
                 if (data.success) {
-                    window.history.back();
+                    window.location.href = 'http://localhost:3000/';
                 } else {
                     alert('게시글 저장 중 문제가 발생했습니다.', data.msg);
                 }

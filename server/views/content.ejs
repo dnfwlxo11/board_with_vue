@@ -9,10 +9,8 @@
 <body>
     <div class="container mt-5">
         <div class="card bg-light mb-3" style="min-height: 600px;">
-            <div class="card-header pl-5">제 목 : <%= title %>
-            </div>
-            <div class="card-header pl-5">작성자 : <%= nickname %>
-            </div>
+            <div class="card-header pl-5">제 목 : <span id="title"><%= title %></span></div>
+            <div class="card-header pl-5">작성자 : <span id="nickname"><%= nickname %></span></div>
             <div class="card-body">
                 <p class="cart-text m-5">
                     <%= content %>
@@ -23,8 +21,35 @@
         <div id="btn-div">
             <button type="button" class="btn btn-secondary" onclick="onClickList()">목록보기</button>
             <button type="button" class="btn btn-danger" onclick="onClickDelete()">삭 제</button>
-            <input id="pass" type="password" class="form-control mt-3" placeholder="비밀번호" aria-describedby="basic-addon1" style="max-width: 300px;">
+            <input id="pass" type="password" class="form-control mt-3" placeholder="비밀번호"
+                aria-describedby="basic-addon1" style="max-width: 300px;">
         </div>
+    </div>
+    <div class="container card mt-5 p-3" style="max-width: 1100px;">
+        
+        <form>
+            <input name="author" type="text" class="form-control mt-3" placeholder="작성자를 입력하세요." style="max-width: 300px;">
+            <input name="pass" type="password" class="form-control mt-3" placeholder="비밀번호를 입력하세요." style="max-width: 300px;">
+            <input name="content" type="text" class="form-control mt-3" placeholder="댓글 내용을 입력하세요." style="min-height: 100px;">
+            <button type="button" class="btn btn-primary mt-3" onclick="onClickCommentAdd(this.form)">등록</button>
+        </form>
+    </div>
+    <div class="container card mt-5 mb-5" style="max-width: 1100px;">
+        <% Array.from(comments).forEach(item => { %>
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <%= item.author %> 
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <p class="card-text"><%= item.content %> </p>
+                        <p class="card-text"><small class="text-muted"><%= item.date %> </small></p>
+                        <button type="button" class="btn btn-danger">삭제</button>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
     </div>
 </body>
 <script src="/js/contentRender.js"></script>
