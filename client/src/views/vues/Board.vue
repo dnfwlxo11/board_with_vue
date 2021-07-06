@@ -11,7 +11,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in pagenatedData" @click="loadContent($event, data[index].seq)">
-                            <td>{{ index + 1 }}</td>
+                            <td>{{ (index + 1) + (pageNum * listSize) }}</td>
                             <td>{{ item.title }}</td>
                             <td>{{ item.nickname }}</td>
                             <td>{{ item.date }}</td>
@@ -27,7 +27,7 @@
                     </tr>
                     <tbody>
                         <tr v-for="(item, index) in pagenatedData">
-                            <th>{{ index + 1 }}</th>
+                            <th>{{ (index + 1) + (pageNum * listSize) }}</th>
                             <th>{{ item.title }}</th>
                         </tr>
                     </tbody>

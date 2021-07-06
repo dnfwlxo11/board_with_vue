@@ -5,10 +5,6 @@ const router = express.Router();
 const { Board } = require('../models/Board');
 const { Comment } = require('../models/Comment');
 
-router.get('/getContent', (req, res) => {
-    res.render('writing')
-});
-
 router.post('/addComment/:id', (req, res) => {
     const data = req.body;
     const date = new Date();
@@ -37,7 +33,6 @@ router.post('/addComment/:id', (req, res) => {
 })
 
 router.post('/deleteComment/:id', (req, res) => {
-    console.log(req.body)
     Comment.findOne({ _id: req.body._id}, (err, item) => {
         if (err) {
             console.log('댓글 삭제 중 에러 발생')
