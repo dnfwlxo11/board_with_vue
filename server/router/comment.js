@@ -37,6 +37,7 @@ router.post('/addComment/:id', (req, res) => {
 })
 
 router.post('/deleteComment/:id', (req, res) => {
+    console.log(req.body)
     Comment.findOne({ _id: req.body._id}, (err, item) => {
         if (err) {
             console.log('댓글 삭제 중 에러 발생')
@@ -52,7 +53,7 @@ router.post('/deleteComment/:id', (req, res) => {
                 item.remove();
                 return res.json({ success: true });
             } else {
-                return res.json({ success: false, msg: '비밀번호가 틀렸습니다.' });
+                return res.json({ success: false, msg: '비밀번호가 다릅니다.' });
             }
         }
     });

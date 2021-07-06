@@ -36,20 +36,19 @@ router.get('/loadContent/:id', (req, res) => {
         .populate('comments')
         .exec((err, item) => {
             if (err) {
-                res.render('error');
+                res.json({ success: false, err });
             } else {
-                res.render('content', { success: true, seq: item.seq, title: item.title, nickname: item.nickname, content: item.content, date: item.date, comments: item.comments });
+                res.json({ success: true, item });
             }
         })
 })
 
 router.post('/deleteContent/:id', (req, res) => {
-    console.log(req.body.pass)
     Board.findOne({ seq: req.params.id }, (err, content) => {
         if (err) {
             return res.json({ success: false, msg: err });
         } else if (content.password != req.body.pass) {
-            return res.json({ success: false, msg: '비밀번호가 틀렸습니다.' });
+            return res.json({ success: false, msg: '비밀번호가 다릅니다.' });
         } else {
             Board.deleteOne({ seq: req.params.id }, (err) => {
                 if (err) {

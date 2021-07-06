@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const board = require('./router/board');
 const comment = require('./router/comment');
 const config = require('./config/key');
+const cors = require('cors');
 
 const { Board } = require('./models/Board');
 
@@ -13,6 +14,7 @@ const PORT = 3000;
 app.use('/', express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors())
 app.set('view engine','ejs');
 
 const mongoose = require('mongoose')
@@ -40,6 +42,7 @@ app.get('/home', (req, res) => {
 
 app.use('/api/board', board);
 app.use('/api/comment', comment);
+
 
 app.listen(PORT, () => {
     console.log(`Server start!!\thttp://localhost:${PORT}`);
