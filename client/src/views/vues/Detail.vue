@@ -1,5 +1,5 @@
 <template>
-    <div v-if="loading">
+    <div v-show="loading">
         <div class="container mt-5">
         <div class="card bg-light mb-3" style="min-height: 600px;">
             <div class="card-header pl-5">제 목 : <span id="title">{{ data.title }}</span></div>

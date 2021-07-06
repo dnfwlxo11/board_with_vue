@@ -4,10 +4,11 @@
             <div class="board-div" style="text-align: center;">
                 <table class="table table-hover mt-5 mb-3 d-md-table d-none">
                     <thead>
-                        <th>번 호</th>
-                        <th>제 목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
+                        <!-- <span class="material-icons">switch_left</span> -->
+                        <th name="index" @click="tableSort">번 호</th>
+                        <th name="title" @click="tableSort">제 목</th>
+                        <th name="nickname" @click="tableSort">작성자</th>
+                        <th name="date" @click="tableSort">작성일</th>
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in pagenatedData" @click="loadContent($event, data[index].seq)">
@@ -21,8 +22,8 @@
 
                 <table class="table table-hover mt-5 mb-3 d-md-none d-table">
                     <tr>
-                        <th>번 호</th>
-                        <th>제 목</th>
+                        <th name="index" @click="tableSort">번 호</th>
+                        <th name="title" @click="tableSort">제 목</th>
                         
                     </tr>
                     <tbody>
@@ -33,10 +34,20 @@
                     </tbody>
                 </table>
             </div>
-            <div class="page-div mb-3">
-                <button :disabled="pageNum === 0" @click="prevPage" class="btn btn-secondary mr-1">이전</button>
-                <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
-                <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="btn btn-secondary ml-1">다음</button>
+            <div class="row">
+                <div class="page-div mb-3 col-3">
+                    <button :disabled="pageNum === 0" @click="prevPage" class="btn btn-secondary mr-1">이전</button>
+                    <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
+                    <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="btn btn-secondary ml-1">다음</button>
+                </div>
+                <div class="col-3">
+                    <select name="pageSize" class="custom-select" v-model="listSize">
+                        <option value="">표시할 개수 선택</option>
+                        <option value="3">3</option>
+                        <option value="5" selected="selected">5</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
             </div>
             <div class="btn-div">
                 <button type="button" class="btn btn-primary" @click="onClickSubmit">등록</button>
@@ -55,6 +66,7 @@ export default {
             pageNum: 0,
             boardList: [],
             listSize: 5,
+            mode: true
         }
     },
 
@@ -73,6 +85,16 @@ export default {
 
         prevPage() {
             this.pageNum -= 1;
+        },
+
+        tableSort(e) {
+            const sortTarget = e.target.getAttribute('name');
+            this.mode ? () => {
+                this.data = this.data.sort((a, b) => { return a[sortTarget] - b[sortTarget] })
+            } : () => {
+                this.data = this.data.sort((a, b) => { return b[sortTarget] - a[sortTarget] })
+            };
+            this.mode = !this.mode;
         }
     },
 
