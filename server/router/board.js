@@ -4,14 +4,25 @@ const router = express.Router();
 
 const { Board } = require('../models/Board');
 
+function setDate() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const second = date.getSeconds();
+
+    return `${year}/${month >= 10 ? month : '0' + month}/${day >= 10 ? day : '0' + day}-${hour >= 10 ? hour : '0' + hour}:${minute >= 10 ? minute : '0' + minute}:${second >= 10 ? second : '0' + second}`;
+}
+
 router.get('/newContent', (req, res) => {
     res.render('writing')
 });
 
 router.post('/newContent', (req, res, next) => {
     const data = req.body;
-    const date = new Date();
-    data.date = date.toString().split('GMT')[0];
+    data.date = setDate();
 
     const board = new Board(data);
 

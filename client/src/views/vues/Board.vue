@@ -11,7 +11,13 @@
                         <th name="date" @click="tableSort">작성일</th>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, index) in pagenatedData" @click="loadContent($event, data[index].seq)">
+                        <tr v-if="indexNum" v-for="(item, index) in pagenatedData" @click="loadContent($event, data[index].seq)">
+                            <td>{{ (pagenatedData.length - index) + (pageNum * listSize) }}</td>
+                            <td>{{ item.title }}</td>
+                            <td>{{ item.nickname }}</td>
+                            <td>{{ item.date }}</td>
+                        </tr>
+                        <tr v-if="!indexNum" v-for="(item, index) in pagenatedData" @click="loadContent($event, data[index].seq)">
                             <td>{{ (index + 1) + (pageNum * listSize) }}</td>
                             <td>{{ item.title }}</td>
                             <td>{{ item.nickname }}</td>
@@ -27,7 +33,11 @@
                         
                     </tr>
                     <tbody>
-                        <tr v-for="(item, index) in pagenatedData">
+                        <tr v-if="indexNum" v-for="(item, index) in pagenatedData">
+                            <th>{{ (pagenatedData.length - index) + (pageNum * listSize) }}</th>
+                            <th>{{ item.title }}</th>
+                        </tr>
+                        <tr v-if="!indexNum" v-for="(item, index) in pagenatedData">
                             <th>{{ (index + 1) + (pageNum * listSize) }}</th>
                             <th>{{ item.title }}</th>
                         </tr>
@@ -41,7 +51,7 @@
                     <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="btn btn-secondary ml-1">다음</button>
                 </div>
                 <div class="col-3">
-                    <select name="pageSize" class="custom-select" v-model="listSize">
+                    <select name="pageSize" class="custom-select" v-model="listSize" @change="pageNum = 0">
                         <option value="">표시할 개수 선택</option>
                         <option value="3">3</option>
                         <option value="5" selected="selected">5</option>
@@ -66,7 +76,8 @@ export default {
             pageNum: 0,
             boardList: [],
             listSize: 5,
-            mode: true
+            mode: true,
+            indexNum: false
         }
     },
 
@@ -89,11 +100,25 @@ export default {
 
         tableSort(e) {
             const sortTarget = e.target.getAttribute('name');
-            this.mode ? () => {
-                this.data = this.data.sort((a, b) => { return a[sortTarget] - b[sortTarget] })
-            } : () => {
-                this.data = this.data.sort((a, b) => { return b[sortTarget] - a[sortTarget] })
-            };
+
+            if (sortTarget == 'index') {
+                this.data = this.data.reverse();
+                this.indexNum = !this.indexNum;
+                return true;
+            }
+
+            if (this.mode) {
+                this.data = this.data.sort((a, b) => { 
+                    console.log(typeof(a[sortTarget]), typeof(b[sortTarget]))
+                    return a[sortTarget] > b[sortTarget] ? 1 : -1
+                });
+            } else {
+                this.data = this.data.sort((a, b) => {
+                    console.log(typeof(a[sortTarget]), typeof(b[sortTarget]))
+                    return a[sortTarget] < b[sortTarget] ? 1 : -1
+                });
+            }
+
             this.mode = !this.mode;
         }
     },
