@@ -83,14 +83,21 @@ export default {
     methods: {
         async loadContent() {
             this.seq = this.$route.params.id;
-            let res = await axios(`/api/board/loadContent/${this.seq}`)
-            this.data = res.data.item;
-            this.comments = res.data.item.comments.reduce((acc, item)=>{
-                item.input_pass = ''
-                acc.push(item)
-                return acc
-            }, []);
+            let content = await axios(`/api/board/loadContent/${this.seq}`)
+            this.data = content.data.item;
+
+            let comments = await axios(`/api/comment/getComments/${this.seq}`)
+            console.log(comments.data)
+            this.comments = comments.data;
             console.log(this.comments)
+            // mongodb
+            // this.comments = data.item.comments.reduce((acc, item)=>{
+            //     item.input_pass = ''
+            //     acc.push(item)
+            //     return acc
+            // }, []);
+            // console.log(this.comments)
+
             this.loading = true;
         },
 
@@ -101,7 +108,8 @@ export default {
                 data: {
                     content: this.commentContent,
                     pass: this.commentPass,
-                    author: this.commentAuthor
+                    author: this.commentAuthor,
+                    seq: this.seq
                 }
             })
 
@@ -130,9 +138,16 @@ export default {
         },
 
         async onClickCommentDelete(data) {
-            const id = data._id
             console.log(data)
-            if(data.pass != data.input_pass){
+
+            // mongodb
+            // const id = data._id
+
+            // mysql
+            const id = data.CID;
+
+            console.log(data)
+            if(data.PASS != data.input_pass){
                 alert('비밀번호가 다릅니다.')
                 return false
             }

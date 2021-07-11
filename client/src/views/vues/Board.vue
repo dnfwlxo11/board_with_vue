@@ -81,6 +81,10 @@ export default {
         }
     },
 
+    mounted() {
+        console.log(this.data);
+    },
+
     methods: {
         loadContent(e, seq) {
             window.location.href = `/content/${seq}`

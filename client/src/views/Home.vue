@@ -38,7 +38,13 @@ export default {
     methods: {
         async getList() {          
             let res = await axios.get('/api/board/updateContent')
-            this.boardData = res.data.contents
+
+            // mongoDB
+            // this.boardData = res.data.contents
+
+            // mysql
+            console.log(res.data)
+            this.boardData = res.data;
         }
     }
 }
