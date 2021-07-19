@@ -23,6 +23,9 @@ mongoose.connect(config.mongoURI, {
 }).then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err))
 
+app.get('/', (req, res) => {
+    res.sendFile('index.html')
+})
 app.use('/api/board', board);
 app.use('/api/comment', comment);
 

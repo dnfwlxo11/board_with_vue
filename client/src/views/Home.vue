@@ -6,24 +6,13 @@
 
 <script>
 import Board from './vues/Board.vue'
-
-import axios from 'axios'
+import { getContent } from '../api/index'
 
 export default {
   name: 'Home',
   components: {
     Board
   },
-  // data() {
-  //   return {
-  //     inputVal: ''
-  //   }
-  // },
-  // methods: {
-  //   onClickHome(val) {
-  //     alert(val)
-  //   },
-  // }
 
   data() {
         return {
@@ -37,14 +26,14 @@ export default {
 
     methods: {
         async getList() {          
-            let res = await axios.get('/api/board/updateContent')
+            let res = await getContent()
 
             // mongoDB
-            // this.boardData = res.data.contents
+            this.boardData = res.data.contents
 
             // mysql
-            console.log(res.data)
-            this.boardData = res.data;
+            // console.log(res.data)
+            // this.boardData = res.data;
         }
     }
 }

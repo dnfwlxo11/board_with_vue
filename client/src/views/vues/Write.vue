@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { createContent } from '../../api/index'
 
 export default {
     name: 'Write',
@@ -39,16 +39,14 @@ export default {
 
     methods: {
         async onClickContentAdd() {
-            let res = await axios({
-                url: `/api/board/newContent`,
-                method: 'POST',
-                data : {
-                    title: this.title,
-                    password: this.pass,
-                    nickname: this.nickname,
-                    content: this.content,
-                }
-            })
+            const data = {
+                title: this.title,
+                password: this.pass,
+                nickname: this.nickname,
+                content: this.content
+            }
+
+            let res = await createContent(data)
 
             if (res.data.success) {
                 alert('글 등록 완료')

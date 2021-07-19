@@ -33,11 +33,11 @@
                         
                     </tr>
                     <tbody>
-                        <tr v-if="indexNum" v-for="(item, index) in pagenatedData">
+                        <tr v-if="indexNum" v-for="(item, index) in pagenatedData" :key="index">
                             <th>{{ (pagenatedData.length - index) + (pageNum * listSize) }}</th>
                             <th>{{ item.title }}</th>
                         </tr>
-                        <tr v-if="!indexNum" v-for="(item, index) in pagenatedData">
+                        <tr v-if="!indexNum" v-for="(item, index) in pagenatedData" :key="index">
                             <th>{{ (index + 1) + (pageNum * listSize) }}</th>
                             <th>{{ item.title }}</th>
                         </tr>
@@ -52,9 +52,9 @@
                 </div>
                 <div class="col-3">
                     <select name="pageSize" class="custom-select" v-model="listSize" @change="pageNum = 0">
-                        <option value="">표시할 개수 선택</option>
+                        <option value="5" selected="selected">표시할 개수 선택</option>
                         <option value="3">3</option>
-                        <option value="5" selected="selected">5</option>
+                        <option value="5">5</option>
                         <option value="10">10</option>
                     </select>
                 </div>

@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { deleteContent, loadContent, addComment, deleteComment } from '../../api/index'
 
 export default {
     name: 'Detail',
@@ -83,35 +83,37 @@ export default {
     methods: {
         async loadContent() {
             this.seq = this.$route.params.id;
-            let content = await axios(`/api/board/loadContent/${this.seq}`)
-            this.data = content.data.item;
 
-            let comments = await axios(`/api/comment/getComments/${this.seq}`)
-            console.log(comments.data)
-            this.comments = comments.data;
-            console.log(this.comments)
-            // mongodb
-            // this.comments = data.item.comments.reduce((acc, item)=>{
-            //     item.input_pass = ''
-            //     acc.push(item)
-            //     return acc
-            // }, []);
+            let content = await loadContent(this.seq)
+            this.data = content.data.item;
+            console.log(this.data)
+
+            // mysql
+            // let comments = await axios(`/api/comment/getComments/${this.seq}`)
+            // console.log(comments.data)
+            // this.comments = comments.data;
             // console.log(this.comments)
+            // mongodb
+
+            this.comments = this.data.comments.reduce((acc, item)=>{
+                item.input_pass = ''
+                acc.push(item)
+                return acc
+            }, []);
+            console.log(this.comments)
 
             this.loading = true;
         },
 
         async onClickCommentAdd() {
-            let res = await axios({
-                method: 'POST', 
-                url: `/api/comment/addComment/${this.seq}`,
-                data: {
-                    content: this.commentContent,
-                    pass: this.commentPass,
-                    author: this.commentAuthor,
-                    seq: this.seq
-                }
-            })
+            const data = {
+                content: this.commentContent,
+                pass: this.commentPass,
+                author: this.commentAuthor,
+                seq: this.seq
+            }
+
+            let res = await addComment(this.seq, data)
 
             if (res.data.success) {
                 window.location.reload();
@@ -121,13 +123,11 @@ export default {
         },
 
         async onClickContentDelete() {
-            let res = await axios({
-                method: 'POST', 
-                url: `/api/board/deleteContent/${this.seq}`,
-                data: {
-                    pass: this.contentPass
-                }
-            })
+            const data = {
+                pass: this.contentPass
+            }
+
+            let res = await deleteContent(this.seq, data)
 
             if (res.data.success) {
                 alert('삭제 완료')
@@ -138,13 +138,16 @@ export default {
         },
 
         async onClickCommentDelete(data) {
-            console.log(data)
+            const sendData = {
+                _id: id,
+                pass: data.input_pass
+            }
 
             // mongodb
-            // const id = data._id
+            const id = data._id
 
             // mysql
-            const id = data.CID;
+            // const id = data.CID;
 
             console.log(data)
             if(data.PASS != data.input_pass){
@@ -152,14 +155,7 @@ export default {
                 return false
             }
 
-            let res = await axios({
-                method: 'POST', 
-                url: `/api/comment/deleteComment/${this.seq}`,
-                data: {
-                    _id: id,
-                    pass: data.input_pass
-                }
-            })
+            let res = await deleteComment(this.seq, sendData)
 
             if (res.data.success) {
                 alert('삭제 완료')
